@@ -26,22 +26,24 @@ public class Polygon
         return true;
     }
 
-    /// <summary> 
-    /// Area di un poligono secondo la formula di Shoelace https://en.wikipedia.org/wiki/Shoelace_formula
-    /// </summary>
-    public double GetArea()
-    {
-        double sum = 0;
-        for (int i = 0; i < Points.Count; i++)
-        {
-            if (i == Points.Count - 1) 
-                sum += (Points[0].X - Points[i].X) * (Points[0].Y + Points[i].Y);
-            else 
-                sum += (Points[i + 1].X - Points[i].X) * (Points[i + 1].Y + Points[i].Y);
-        }
-        //la somma sarà negativa se i vertici sono in senso antiorario
-        return Math.Abs(sum * 0.5);
-    }
+   /// <summary> 
+   /// Area di un poligono secondo la formula dell'area di Gauss https://en.wikipedia.org/wiki/Shoelace_formula
+   /// Formula:
+   /// Ai = 1/2 (yi + yi+1)(xi - xi+1)
+   /// A = Sum i=1 n (Ai) = 1/2 Sum i=1 n (yi + yi+1)(xi - xi+1)
+   /// </summary>
+   public double GetArea()
+   {
+       double sum = 0;
+       for (int i = 0; i < Points.Count; i++)
+       {
+           if (i == Points.Count - 1)
+               sum += (Points[i].X - Points[0].X) * (Points[i].Y + Points[0].Y);
+           else
+               sum += (Points[i].X - Points[i + 1].X) * (Points[i].Y + Points[i + 1].Y);
+       }
+       return Math.Abs(sum * 0.5);
+   }
 
    private void SetCenter(List<Point2D> points)
    {
