@@ -41,7 +41,7 @@ public class Segment2D
             return false;
         }
 
-        public static Point2D IntersectionBetweenSegments2D(Segment2D s1, Segment2D s2)
+        public static Point2D Intersection(Segment2D s1, Segment2D s2)
         {
             double m1 = (s1.EndPoint.Y - s1.StartPoint.Y) / (s1.EndPoint.X - s1.StartPoint.X);
             double m2 = (s2.EndPoint.Y - s2.StartPoint.Y) / (s2.EndPoint.X - s2.StartPoint.X);
