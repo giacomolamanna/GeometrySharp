@@ -1,11 +1,21 @@
 public class Triangle2D
 {
+    #region Constructors
+        
     public Triangle2D(Point2D p1, Point2D p2, Point2D p3)
     {
         P1 = p1;
         P2 = p2;
         P3 = p3;
+        
+        Side1 = new Segment2D(P1, P2);
+        Side2 = new Segment2D(P2, P3);
+        Side3 = new Segment2D(P3, P1);
     }
+    
+    #endregion
+
+    #region Properties
 
     public Point2D P1 { get; set; }
     public Point2D P2 { get; set; }
@@ -19,6 +29,28 @@ public class Triangle2D
         }
     }
     
+
+    public Segment2D Side1 { get; private set; }
+    public Segment2D Side2 { get; private set; }
+    public Segment2D Side3 { get; private set; }
+    
+    public List<Segment2D> Sides
+    {
+        get
+        {
+            return new List<Segment2D>() { Side1, Side2, Side3 };
+        }
+    }
+    
+    public double Area { get { return GetArea(this); } }
+    public double Perimeter { get { return GetPerimeter(this); } }
+    public double AngleP1 { get { return GetAngleInPoint(P1, P2, P3); } }
+    public double AngleP2 { get { return GetAngleInPoint(P2, P1, P3); } }
+    public double AngleP3 { get { return GetAngleInPoint(P3, P2, P1); } }
+
+    #endregion
+        
+    
     public Triangle2D Clone()
     {
         return new Triangle2D(P1, P2, P3);
@@ -31,9 +63,22 @@ public class Triangle2D
         return new Point2D(centerX, centerY);
     }
     
-    public double GetArea()
+    public static double GetArea(Triangle2D t)
     {
-        return Math.Abs(0.5 * (P1.X * (P2.Y - P3.Y) + P2.X * (P3.Y - P1.Y) + P3.X * (P1.Y - P2.Y)));
+        return Math.Abs(0.5 * (t.P1.X * (t.P2.Y - t.P3.Y) + t.P2.X * (t.P3.Y - t.P1.Y) + t.P3.X * (t.P1.Y - t.P2.Y)));
+    }
+    
+    public static double GetPerimeter(Triangle2D t)
+    {
+        return t.Side1.Length + t.Side2.Length + t.Side3.Length;
+    }
+    
+    public static double GetAngleInPoint(Point2D p1, Point2D p2, Point2D p3)
+    {
+        double l1 = p2.DistanceTo(p3);
+        double l2 = p1.DistanceTo(p3);
+        double l3 = p1.DistanceTo(p2);
+        return Math.Acos(((l2 * l2) + (l3 * l3) - (l1 * l1)) / (2 * l2 * l3));
     }
     
     public void Translate(double x, double y)
