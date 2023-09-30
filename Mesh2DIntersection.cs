@@ -3,16 +3,18 @@ using System.Linq;
 
 namespace GeometrySharp
 {
-    /// <summary>
-    /// Intersection between two Mesh2D
-    /// </summary>
-    /// <param name="mesh1"></param>
-    /// <param name="mesh2"></param>
-    /// <param name="intersection"></param>
-    /// <returns></returns>
-    public class Mesh2DIntersection
+    public static class Mesh2DIntersection
     {
-        public bool Intersection(Mesh2D mesh1, Mesh2D mesh2, out Mesh2D intersection)
+        public static double Tolerance = 1e-06;
+
+        /// <summary>
+        /// Intersection between two Mesh2D
+        /// </summary>
+        /// <param name="mesh1"></param>
+        /// <param name="mesh2"></param>
+        /// <param name="intersection"></param>
+        /// <returns></returns>
+        public static bool Intersection(Mesh2D mesh1, Mesh2D mesh2, out Mesh2D intersection)
         {
             intersection = null;
 
@@ -37,7 +39,7 @@ namespace GeometrySharp
                 intersection = null;
                 return false;
             }
-            if (intersection.GetArea() < 1e-06)
+            if (intersection.GetArea() < Tolerance)
             {
                 intersection = null;
                 return false;
@@ -47,8 +49,6 @@ namespace GeometrySharp
         }
 
 
-        #region Private methods
-
 
         /// <summary>
         /// Lista di point2D che descrivono il contorno di un poligono convesso, 
@@ -56,7 +56,7 @@ namespace GeometrySharp
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        public static List<Triangle2D> InternalConvexPolygonTriangulation(List<Point2D> points)
+        private static List<Triangle2D> InternalConvexPolygonTriangulation(List<Point2D> points)
         {
             List<Triangle2D> triangles = new List<Triangle2D>();
             if (points.Count >= 3)
@@ -75,7 +75,7 @@ namespace GeometrySharp
 
 
 
-        private List<Point2D> IntersectionBetweenTriangles2D(Triangle2D t1, Triangle2D t2)
+        private static List<Point2D> IntersectionBetweenTriangles2D(Triangle2D t1, Triangle2D t2)
         {
             List<Point2D> points = new List<Point2D>();
 
@@ -100,7 +100,6 @@ namespace GeometrySharp
             return new List<Point2D>();
         }
 
-
-        #endregion
     }
 }
+
