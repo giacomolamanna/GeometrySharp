@@ -15,6 +15,8 @@ namespace GeometrySharp
 
         public static Point2D Zero = new Point2D(0, 0);
 
+        public Vector2D AsVector { get { return new Vector2D(X, Y); } }
+
         public double DistanceTo(Point2D p) => Math.Sqrt(Math.Pow(p.X - X, 2) + Math.Pow(p.Y - Y, 2));
 
         public Point2D MidPoint(Point2D p)
