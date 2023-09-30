@@ -19,7 +19,7 @@ namespace GeometrySharp
 
         public Point2D P2D { get { return new Point2D(X, Y); } }
 
-        //public Vector3D AsVector { get { return new Vector3D(X, Y, Z); } }
+        public Vector3D AsVector { get { return new Vector3D(X, Y, Z); } }
 
         public static Point3D Zero = new Point3D(0, 0, 0);
 
@@ -72,4 +72,3 @@ namespace GeometrySharp
 
     }
 }
-
