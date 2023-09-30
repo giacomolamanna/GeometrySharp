@@ -73,6 +73,11 @@ namespace GeometrySharp
             return ((t1 >= 0) && (t1 <= 1) && (t2 >= 0) && (t2 <= 1));
         }
 
+        public static bool AreParallel(Segment2D seg1, Segment2D seg2)
+        {
+            return Vector2D.AreParallel(new Vector2D(seg1), new Vector2D(seg2));
+        }
+
         public void Translate(double x, double y, double z = 0)
         {
             StartPoint.Translate(x, y, z);
