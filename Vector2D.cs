@@ -1,4 +1,8 @@
-public class Vector2D
+using System;
+
+namespace GeometrySharp
+{
+    public class Vector2D
     {
         public Vector2D(Point2D p)
         {
@@ -89,3 +93,5 @@ public class Vector2D
             return new Vector2D(vector.X * value, vector.Y * value);
         }
     }
+}
+
