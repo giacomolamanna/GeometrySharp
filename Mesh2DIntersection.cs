@@ -3,7 +3,14 @@ using System.Linq;
 
 namespace GeometrySharp
 {
-    internal class Mesh2DIntersection
+    /// <summary>
+    /// Intersection between two Mesh2D
+    /// </summary>
+    /// <param name="mesh1"></param>
+    /// <param name="mesh2"></param>
+    /// <param name="intersection"></param>
+    /// <returns></returns>
+    public class Mesh2DIntersection
     {
         public bool Intersection(Mesh2D mesh1, Mesh2D mesh2, out Mesh2D intersection)
         {
