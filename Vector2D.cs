@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 
 namespace GeometrySharp
 {
@@ -36,6 +37,15 @@ namespace GeometrySharp
             X = x;
             Y = y;
             Length = Point2D.Zero.DistanceTo(new Point2D(x, y));
+            if (Length == 0) IsPoint = true;
+            else IsPoint = false;
+        }
+
+        public Vector2D(Segment2D seg)
+        {
+            X = seg.EndPoint.X - seg.StartPoint.X;
+            Y = seg.EndPoint.Y - seg.StartPoint.Y;
+            Length = seg.Length;
             if (Length == 0) IsPoint = true;
             else IsPoint = false;
         }
@@ -81,6 +91,14 @@ namespace GeometrySharp
             return v1.X * v2.X + v1.Y * v2.Y;
         }
 
+        public static bool AreParallel(Vector2D v1, Vector2D v2)
+        {
+            double ratio1 = v1.X / v1.Y;
+            double ratio2 = v2.X / v2.Y;
+
+            return Math.Abs(ratio1 - ratio2) <= double.Epsilon;
+        }
+
         public static double AngleBetweenVectors(Vector2D v1, Vector2D v2)
         {
             double dotProduct = Dot(v1, v2);
@@ -94,4 +112,3 @@ namespace GeometrySharp
         }
     }
 }
-
