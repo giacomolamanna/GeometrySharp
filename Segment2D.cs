@@ -1,4 +1,6 @@
-public class Segment2D
+namespace GeometrySharp
+{
+    public class Segment2D
     {
         public Segment2D(Point2D p1, Point2D p2)
         {
@@ -41,13 +43,34 @@ public class Segment2D
             return false;
         }
 
-        public static Point2D Intersection(Segment2D s1, Segment2D s2)
+        
+        public static bool Intersection(Segment2D seg1, Segment2D seg2, out Point2D intersection)
         {
-            double m1 = (s1.EndPoint.Y - s1.StartPoint.Y) / (s1.EndPoint.X - s1.StartPoint.X);
-            double m2 = (s2.EndPoint.Y - s2.StartPoint.Y) / (s2.EndPoint.X - s2.StartPoint.X);
-            double y = (1 / (m2 - m1)) * (-m1 * s2.StartPoint.Y + m1 * m2 * s2.StartPoint.X - m1 * m2 * s1.StartPoint.X + m2 * s1.StartPoint.Y);
-            double x = (1 / m2) * (y - s2.StartPoint.Y + m2 * s2.StartPoint.X);
-            return new Point2D(x, y);
+            intersection = null;
+
+            Point2D p1 = seg1.StartPoint;
+            Point2D p2 = seg1.EndPoint;
+            Point2D p3 = seg2.StartPoint;
+            Point2D p4 = seg2.EndPoint;
+
+            double dx12 = p2.X - p1.X;
+            double dy12 = p2.Y - p1.Y;
+            double dx34 = p4.X - p3.X;
+            double dy34 = p4.Y - p3.Y;
+
+            double denominator = (dy12 * dx34 - dx12 * dy34);
+
+            double t1 = ((p1.X - p3.X) * dy34 + (p3.Y - p1.Y) * dx34) / denominator;
+
+            //Segmenti paralleli
+            if (double.IsInfinity(t1))
+                return false;
+
+            double t2 = ((p3.X - p1.X) * dy12 + (p1.Y - p3.Y) * dx12) / -denominator;
+
+            intersection = new Point2D(p1.X + dx12 * t1, p1.Y + dy12 * t1);
+
+            return ((t1 >= 0) && (t1 <= 1) && (t2 >= 0) && (t2 <= 1));
         }
 
         public void Translate(double x, double y, double z = 0)
@@ -65,3 +88,4 @@ public class Segment2D
             Normal = Vector2D.Normalize(new Vector2D(new Point2D(-dy, dx), new Point2D(dy, -dx)));
         }
     }
+}
